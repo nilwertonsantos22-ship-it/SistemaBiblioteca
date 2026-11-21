@@ -1,0 +1,9 @@
+# Configurações do IntelliJ
+.idea/
+*.iml
+
+# Arquivos gerados pelo Maven
+target/
+
+# Arquivo de ambiente
+.env
