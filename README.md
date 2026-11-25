@@ -1,134 +1,140 @@
-Preparei a documentação considerando nosso projeto, Java 26, Maven, MySQL e as duas entidades: Autor e Livro.
-Writing{variant="document" id="63821"}
-# 📚 Sistema de Biblioteca
+# Sistema de Biblioteca
 
-Sistema de gerenciamento de biblioteca desenvolvido em Java, como parte do Desafio Extra da disciplina de Programação Orientada a Objetos (POO).
+Sistema de gerenciamento de biblioteca desenvolvido em Java, utilizando Programação Orientada a Objetos, MySQL e integração com a API pública Open Library.
 
-O projeto procura aplicar os conceitos de Programação Orientada a Objetos, operações CRUD, integração com banco de dados e consumo de API externa.
+## Objetivo
 
-## 🎯 Objetivo do Projeto
+Desenvolver um sistema para cadastrar, consultar, atualizar e excluir autores e livros, mantendo o relacionamento entre essas entidades no banco de dados.
 
-Desenvolver uma aplicação que permita gerenciar autores e livros, mantendo o relacionamento entre essas entidades e armazenando os dados em um banco de dados MySQL.
-
-## 🛠️ Tecnologias Utilizadas
+## Tecnologias utilizadas
 
 - Java 26
 - Maven
-- MySQL
+- MySQL 8
 - JDBC
+- dotenv-java
+- Jackson
+- Open Library API
 - Git e GitHub
-- API ViaCEP (integração prevista)
 
-## 📋 Funcionalidades
+## Funcionalidades
 
-O sistema terá as seguintes funcionalidades:
-
-### Gerenciamento de Autores
+### Gerenciamento de autores
 - Cadastrar autores.
 - Listar autores.
-- Atualizar dados dos autores.
+- Atualizar autores.
 - Excluir autores.
 
-### Gerenciamento de Livros
+### Gerenciamento de livros
 - Cadastrar livros.
 - Listar livros.
-- Atualizar dados dos livros.
+- Atualizar livros.
 - Excluir livros.
 - Relacionar livros aos seus respectivos autores.
 
-### Integração
-- Conexão com banco de dados MySQL.
-- Consumo de API externa.
-- Armazenamento de configurações por meio de arquivo `.env`.
+### Pesquisa de livros
+- Pesquisar livros pelo título ou ISBN.
+- Consultar informações bibliográficas na Open Library API.
+- Exibir título, autor, editora, ano e ISBN quando disponíveis.
 
-## 🗂️ Estrutura do Projeto
+## Banco de dados
+
+O projeto utiliza MySQL com duas tabelas principais:
+
+- `autor`: armazena nome e nacionalidade.
+- `livro`: armazena título, ISBN, ano de publicação e o identificador do autor.
+
+A tabela `livro` possui uma chave estrangeira que referencia a tabela `autor`.
+
+## Configuração do ambiente
+
+### Pré-requisitos
+
+- Java JDK 26.
+- Maven.
+- MySQL Server 8.
+- IntelliJ IDEA ou outra IDE compatível.
+
+### 1. Clonar o repositório
+
+```bash
+git clone git clone https://github.com/nilwertonsantos22-ship-it/SistemaBiblioteca
+
+```
+
+### 2. Criar o banco de dados
+
+No MySQL, execute:
+
+```sql
+CREATE DATABASE sistema_biblioteca;
+```
+
+### 3. Configurar as variáveis de ambiente
+
+Crie um arquivo `.env` na raiz do projeto, utilizando o `.env.example` como referência.
+
+Configure:
+
+```env
+DB_URL=jdbc:mysql://localhost:3306/sistema_biblioteca
+DB_USER=root
+DB_PASSWORD=sua_senha
+```
+
+Substitua `sua_senha` pela senha configurada no seu MySQL.
+
+**Importante:** não publique o arquivo `.env`, pois ele contém informações privadas.
+
+### 4. Executar o projeto
+
+Abra o projeto na IDE, aguarde a sincronização do Maven e execute a classe:
+
+`br.edu.poo.m0006.Main`
+
+
+### Estrutura do banco de dados
+
+O projeto disponibiliza o script SQL em `database/schema.sql`, contendo a criação do banco de dados `sistema_biblioteca` e das tabelas `autor` e `livro`, incluindo o relacionamento entre elas por chave estrangeira.
+
+Para configurar o banco em uma instalação nova:
+
+1. Abra o MySQL Workbench.
+2. Conecte-se ao servidor MySQL.
+3. Abra o arquivo `database/schema.sql`.
+4. Execute o script para criar o banco e as tabelas.
+
+        
+## Organização do projeto
 
 ```text
-SistemaBiblioteca/
-│
-├── src/
-│   ├── main/
-│   │   ├── java/
-│   │   │   └── br/edu/poo/m0006/
-│   │   │       ├── api/
-│   │   │       ├── config/
-│   │   │       ├── dao/
-│   │   │       ├── model/
-│   │   │       │   ├── Autor.java
-│   │   │       │   └── Livro.java
-│   │   │       ├── service/
-│   │   │       └── Main.java
-│   │   │
-│   │   └── resources/
-│   │
-│   └── test/
-│
-├── .env.example
-├── .gitignore
-├── pom.xml
-└── README.md
+src/
+ └── main/
+     ├── java/
+     │   └── br/edu/poo/m0006/
+     │       ├── api/
+     │       ├── config/
+     │       ├── dao/
+     │       ├── model/
+     │       ├── service/
+     │       └── Main.java
+     └── resources/
+
+.env
+.env.example
+.gitignore
+pom.xml
+README.md
 ```
 
-## ⚙️ Requisitos para execução
+## Integração externa
 
-Antes de executar o projeto, é necessário ter instalado:
+A pesquisa de livros utiliza a Open Library Search API:
 
-- JDK 26.
-- Apache Maven.
-- MySQL Server.
-- IntelliJ IDEA ou outra IDE compatível com Java.
+https://openlibrary.org/dev/docs/api/search
 
-## 🚀 Instalação e execução
+## Autor
 
-1. Clone o repositório:
+Desenvolvido por Nilwerton Santos.
 
-```bash
-git clone https://github.com/nilwertonsantos22-ship-it/SistemaBiblioteca.git
-```
-
-2. Entre na pasta do projeto:
-
-```bash
-cd SistemaBiblioteca
-```
-
-3. Configure o banco de dados MySQL.
-
-4. Crie o arquivo `.env` na raiz do projeto, utilizando o `.env.example` como referência.
-
-5. Configure suas credenciais de acesso ao banco de dados.
-
-6. Abra o projeto no IntelliJ IDEA e aguarde a sincronização do Maven.
-
-7. Execute a classe `Main.java`.
-
-## 🔐 Configuração do ambiente
-
-As configurações de acesso ao banco de dados serão armazenadas no arquivo `.env`, evitando deixar informações sensíveis diretamente no código-fonte.
-
-O arquivo `.env.example` apresentará os nomes das variáveis necessárias para configurar o ambiente.
-
-**Importante:** o arquivo `.env` real não deve ser enviado ao GitHub.
-
-## 🗄️ Banco de Dados
-
-O projeto utilizará o MySQL para armazenar as informações de autores e livros.
-
-As operações de cadastro, consulta, atualização e exclusão serão realizadas por meio de JDBC.
-
-## 👨‍💻 Desenvolvedor
-
-José Nílwerton dos Santos da Silva
-
-
-Projeto individual desenvolvido para a disciplina de Programação Orientada a Objetos (POO).
-
-## 📌 Status do Projeto
-
-🚧 Em desenvolvimento.
-
-## 📅 Entrega
-
-Desafio Extra de Programação Orientada a Objetos.
-
-Prazo: 05 de dezembro de 2026.
+Projeto acadêmico de Programação Orientada a Objetos.
